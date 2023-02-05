@@ -1,0 +1,31 @@
+code = { stmt ';' };
+stmt = function | declare | assign | call;
+
+(* statements *)
+
+function = 'fn' id '(' f_args ')' '=' expr;
+declare = 'let' id [ '=' expr ];
+assign = id '=' expr;
+call = id '(' c_args ')';
+
+(* args *)
+
+f_args = [ id { ',' id } ];
+c_args = [ expr { ',' expr } ];
+
+(* expressions *)
+
+expr = 
+      expr '+' term
+    | expr '-' term
+    | term;
+
+term =
+      term '*' fact
+    | term '/' fact
+    | fact;
+
+fact = atom | '-' fact | call | '(' expr ')';
+
+atom = id | num;
+unary = '-' fact;
