@@ -3,11 +3,13 @@ use std::fmt::Display;
 
 use super::operator::Operator;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum TokenValue {
     Id(String),
     Number(f64),
     Operator(Operator),
+
+    EOF,
 
     // special chars
     Comma,
@@ -26,7 +28,7 @@ pub enum TokenValue {
 impl Display for TokenValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Id(id) => write!(f, "{id}"),
+            Self::Id(id) => write!(f, "{}", id.yellow()),
             Self::Number(num) => write!(f, "{}", num.to_string().yellow()),
             Self::Operator(op) => write!(f, "{}", op.to_string().green()),
             Self::Comma => write!(f, "{}", ",".magenta()),
@@ -38,6 +40,7 @@ impl Display for TokenValue {
             Self::ClosingBrace => write!(f, "{}", "}".magenta()),
             Self::Fn => write!(f, "{}", "fn".cyan()),
             Self::Let => write!(f, "{}", "let".cyan()),
+            Self::EOF => write!(f, "{}", "EOF".black()),
         }
     }
 }

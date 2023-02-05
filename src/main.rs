@@ -1,14 +1,24 @@
-use token::*;
+use lexer::Lexer;
 
+use crate::token::TokenValue;
+
+mod error;
+mod lexer;
 mod token;
 
 fn main() {
-    println!("{}", Token::new(TokenValue::Number(9.2), Pos::new(1, 2, 0)));
-    println!("{}", Token::new(TokenValue::Fn, Pos::new(1, 2, 0)));
-    println!("{}", Token::new(TokenValue::Comma, Pos::new(1, 2, 0)));
-    println!("{}", Token::new(TokenValue::Semicolon, Pos::new(1, 2, 0)));
-    println!(
-        "{}",
-        Token::new(TokenValue::Operator(Operator::Addition), Pos::new(1, 2, 0))
-    );
+    let code = "(){}+-*/2.2 0x_F id fn let";
+    let mut lexer = Lexer::new(code);
+
+    loop {
+        match lexer.next() {
+            Ok(token) => {
+                println!("{}", token);
+                if token.value == TokenValue::EOF {
+                    break;
+                }
+            }
+            Err(error) => println!("{}", error),
+        }
+    }
 }
