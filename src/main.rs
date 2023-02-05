@@ -2,12 +2,13 @@ use lexer::Lexer;
 
 use crate::token::TokenValue;
 
+mod ast;
 mod error;
 mod lexer;
 mod token;
 
 fn main() {
-    let code = "(){}+-*/2.2 0x_F id fn let";
+    let code = "@(){}+-*/2.2 0x_F id fn let/*sperma*/ //huita\n";
     let mut lexer = Lexer::new(code);
 
     loop {

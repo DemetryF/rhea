@@ -28,7 +28,7 @@ pub enum TokenValue {
 impl Display for TokenValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Id(id) => write!(f, "{}", id.yellow()),
+            Self::Id(id) => write!(f, "{}", id.white()),
             Self::Number(num) => write!(f, "{}", num.to_string().yellow()),
             Self::Operator(op) => write!(f, "{}", op.to_string().green()),
             Self::Comma => write!(f, "{}", ",".magenta()),
