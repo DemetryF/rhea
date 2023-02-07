@@ -3,8 +3,7 @@ pub mod operator_collector;
 pub mod special_collector;
 pub mod word_collector;
 
-use super::CodeStream;
-use crate::token::TokenValue;
+use crate::{lexer::CodeStream, token::TokenValue};
 
 pub use self::{
     number_collector::NumberCollector, operator_collector::OperatorCollector,

@@ -17,8 +17,6 @@ pub enum TokenValue {
     Assignment,
     OpeningParen,
     ClosingParen,
-    OpeningBrace,
-    ClosingBrace,
 
     // keywords
     Fn,
@@ -36,8 +34,6 @@ impl Display for TokenValue {
             Self::Assignment => write!(f, "{}", "=".magenta()),
             Self::OpeningParen => write!(f, "{}", "(".magenta()),
             Self::ClosingParen => write!(f, "{}", ")".magenta()),
-            Self::OpeningBrace => write!(f, "{}", "{".magenta()),
-            Self::ClosingBrace => write!(f, "{}", "}".magenta()),
             Self::Fn => write!(f, "{}", "fn".cyan()),
             Self::Let => write!(f, "{}", "let".cyan()),
             Self::EOF => write!(f, "{}", "EOF".black()),

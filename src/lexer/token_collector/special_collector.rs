@@ -1,5 +1,7 @@
-use super::{CodeStream, TokenCollector};
-use crate::token::TokenValue;
+use crate::{
+    lexer::{CodeStream, TokenCollector},
+    token::TokenValue,
+};
 
 pub struct SpecialCollector;
 impl TokenCollector for SpecialCollector {
@@ -10,8 +12,6 @@ impl TokenCollector for SpecialCollector {
             '=' => TokenValue::Assignment,
             '(' => TokenValue::OpeningParen,
             ')' => TokenValue::ClosingParen,
-            '{' => TokenValue::OpeningBrace,
-            '}' => TokenValue::ClosingBrace,
 
             _ => return None,
         };

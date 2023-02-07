@@ -7,7 +7,7 @@ pub mod operator;
 pub mod pos;
 pub mod token_value;
 
-#[derive(Debug, Constructor)]
+#[derive(Debug, Constructor, Clone)]
 pub struct Token {
     pub value: TokenValue,
     pub pos: Pos,

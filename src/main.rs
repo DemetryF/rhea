@@ -1,25 +1,20 @@
-use lexer::Lexer;
-
-use crate::token::TokenValue;
+use parser::Parser;
 
 mod ast;
 mod error;
 mod lexer;
+mod parser;
 mod token;
 
 fn main() {
-    let code = "@(){}+-*/2.2 0x_F id fn let/*sperma*/ //huita\n";
-    let mut lexer = Lexer::new(code);
+    let code = "let a = sosat 4len 2;fn b(x) = x * x;b(1);a = b(2);";
+    let mut parser = Parser::new(code).unwrap();
 
-    loop {
-        match lexer.next() {
-            Ok(token) => {
-                println!("{}", token);
-                if token.value == TokenValue::EOF {
-                    break;
-                }
-            }
-            Err(error) => println!("{}", error),
-        }
+    for stmt in parser.parse().unwrap() {
+        println!("{:#?}", stmt)
+    }
+
+    for error in parser.token_stream.errors {
+        println!("{:#?}", error)
     }
 }

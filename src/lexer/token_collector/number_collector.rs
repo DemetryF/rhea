@@ -1,7 +1,9 @@
 use parse_int::parse;
 
-use super::{CodeStream, TokenCollector};
-use crate::token::TokenValue;
+use crate::{
+    lexer::{CodeStream, TokenCollector},
+    token::TokenValue,
+};
 
 pub struct NumberCollector;
 impl TokenCollector for NumberCollector {

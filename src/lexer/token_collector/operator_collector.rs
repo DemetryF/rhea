@@ -1,7 +1,9 @@
 use strum::IntoEnumIterator;
 
-use super::{CodeStream, TokenCollector};
-use crate::token::{Operator, TokenValue};
+use crate::{
+    lexer::{CodeStream, TokenCollector},
+    token::{Operator, TokenValue},
+};
 
 pub struct OperatorCollector;
 impl TokenCollector for OperatorCollector {

@@ -1,6 +1,7 @@
-use super::{CodeStream, TokenCollector};
-use crate::token::TokenValue;
-
+use crate::{
+    lexer::{CodeStream, TokenCollector},
+    token::TokenValue,
+};
 pub struct WordCollector;
 impl TokenCollector for WordCollector {
     fn try_next(&mut self, code_stream: &mut CodeStream) -> Option<TokenValue> {
