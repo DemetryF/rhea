@@ -1,10 +1,4 @@
-use parser::Parser;
-
-mod ast;
-mod error;
-mod lexer;
-mod parser;
-mod token;
+use frontend::parser::Parser;
 
 fn main() {
     let code = "let a = sosat 4len 2;fn b(x) = x * x;b(1);a = b(2);";
