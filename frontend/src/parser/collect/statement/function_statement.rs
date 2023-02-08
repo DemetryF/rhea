@@ -1,5 +1,5 @@
 use crate::{
-    ast::{Expr, FunctionStatement},
+    ast::{Expr, FunctionStatement, Id},
     error::*,
     parser::{Collect, ParserUtils, TokenStream},
     token::TokenValue,
@@ -18,7 +18,7 @@ impl Collect for FunctionStatement {
 }
 
 impl FunctionStatement {
-    fn collect_args(token_stream: &mut TokenStream) -> Result<Vec<String>> {
+    fn collect_args(token_stream: &mut TokenStream) -> Result<Vec<Id>> {
         let mut args = Vec::new();
 
         token_stream.accept(&TokenValue::OpeningParen)?;

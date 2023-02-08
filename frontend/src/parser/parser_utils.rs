@@ -1,4 +1,5 @@
 use crate::{
+    ast::Id,
     error::*,
     parser::TokenStream,
     token::{Operator, TokenValue},
@@ -6,10 +7,10 @@ use crate::{
 
 pub struct ParserUtils;
 impl ParserUtils {
-    pub fn id(token_stream: &mut TokenStream) -> Result<String> {
+    pub fn id(token_stream: &mut TokenStream) -> Result<Id> {
         let token = token_stream.skip()?;
         match token.value {
-            TokenValue::Id(value) => Ok(value),
+            TokenValue::Id(value) => Ok(Id::new(value, token.pos)),
             _ => Err(Error::new(
                 ErrorKind::UnexpectedToken(token.value),
                 token.pos,

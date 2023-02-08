@@ -1,6 +1,6 @@
 use derive_more::Constructor;
 
-use crate::ast::{Call, Expr};
+use crate::ast::{Call, Expr, Id};
 
 #[derive(Debug)]
 pub enum Statement {
@@ -12,19 +12,19 @@ pub enum Statement {
 
 #[derive(Debug, Constructor)]
 pub struct AssignmentStatement {
-    pub id: String,
+    pub id: Id,
     pub expr: Expr,
 }
 
 #[derive(Debug, Constructor)]
 pub struct FunctionStatement {
-    pub id: String,
-    pub args: Vec<String>,
+    pub id: Id,
+    pub args: Vec<Id>,
     pub body: Expr,
 }
 
 #[derive(Debug, Constructor)]
 pub struct DeclareStatement {
-    pub id: String,
+    pub id: Id,
     pub expr: Option<Expr>,
 }

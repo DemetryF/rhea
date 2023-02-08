@@ -1,10 +1,10 @@
 use derive_more::Constructor;
 
-use crate::token::Operator;
+use crate::{ast::Id, token::Operator};
 
 #[derive(Debug, Constructor)]
 pub struct Call {
-    pub id: String,
+    pub id: Id,
     pub args: Vec<Expr>,
 }
 
@@ -32,5 +32,5 @@ pub struct Prefix {
 #[derive(Debug)]
 pub enum Atom {
     Literal(f64),
-    Id(String),
+    Id(Id),
 }

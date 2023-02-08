@@ -1,5 +1,5 @@
 use crate::{
-    ast::{Atom, Call, Expr, Infix, Prefix},
+    ast::{Atom, Call, Expr, Id, Infix, Prefix},
     error::*,
     parser::{Collect, PowerBinding, TokenStream},
     token::TokenValue,
@@ -56,7 +56,7 @@ impl Expr {
                     Self::Call(Call::collect(token_stream)?)
                 } else {
                     token_stream.skip()?;
-                    Self::Atom(Atom::Id(id))
+                    Self::Atom(Atom::Id(Id::new(id, token.pos)))
                 }
             }
 
