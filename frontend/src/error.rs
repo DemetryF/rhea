@@ -20,6 +20,12 @@ pub enum ErrorKind {
     InvalidArgsCount { expected: usize, received: usize },
 }
 
+impl Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Error: {} at {}", self.kind, self.pos)
+    }
+}
+
 impl Display for ErrorKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -28,14 +34,8 @@ impl Display for ErrorKind {
             Self::InvalidVariable(var) => write!(f, "invalid variable '{var}'"),
             Self::InvalidFunction(func) => write!(f, "invalid function '{func}'"),
             Self::InvalidArgsCount { expected, received } => {
-                write!(f, "expected {expected} args, recieved {received}")
+                write!(f, "expected {expected} args, received {received}")
             }
         }
-    }
-}
-
-impl Display for Error {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Error: {} at {}", self.kind, self.pos)
     }
 }

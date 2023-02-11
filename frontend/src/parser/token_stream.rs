@@ -65,15 +65,14 @@ impl<'code> TokenStream<'code> {
     }
 
     pub fn unexpected_token(&self) -> Error {
-        let current = self.current.clone();
+        let Token { value, pos } = self.current.clone();
 
-        Error::new(ErrorKind::UnexpectedToken(current.value), current.pos)
+        Error::new(ErrorKind::UnexpectedToken(value), pos)
     }
 
     pub fn recovery(&mut self) {
         loop {
             if let Ok(Token { value, .. }) = self.skip() {
-                println!("{}", value);
                 if value == TokenValue::Semicolon || self.is_end() {
                     break;
                 }

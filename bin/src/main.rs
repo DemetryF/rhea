@@ -25,13 +25,13 @@ fn main() {
 
         if !parser.token_stream.errors.is_empty() {
             for error in parser.token_stream.errors {
-                println!("{:#?}", error)
+                println!("{error}")
             }
         } else {
             for stmt in stmts {
                 match interpreter.eval(stmt) {
                     Ok(()) => (),
-                    Err(error) => println!("{:#?}", error),
+                    Err(error) => println!("{error}"),
                 }
             }
         }

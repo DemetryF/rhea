@@ -7,7 +7,7 @@ use crate::{Eval, Interpreter, SharedEnv};
 impl Eval for Infix {
     fn eval(self, interpreter: &Interpreter, env: SharedEnv) -> Result<f64> {
         let lhs = self.lhs.eval(interpreter, Rc::clone(&env))?;
-        let rhs = self.rhs.eval(interpreter, Rc::clone(&env))?;
+        let rhs = self.rhs.eval(interpreter, env)?;
 
         Ok(match self.op {
             Operator::Addition => lhs + rhs,

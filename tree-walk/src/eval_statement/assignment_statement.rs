@@ -6,9 +6,10 @@ use crate::{Eval, EvalStatement, Interpreter, SharedEnv};
 
 impl EvalStatement for AssignmentStatement {
     fn eval(self, interpreter: &mut Interpreter, env: SharedEnv) -> Result<()> {
-        Rc::clone(&env)
-            .borrow_mut()
-            .set_variable(self.id, self.expr.eval(interpreter, env)?)?;
+        let id = self.id;
+        let value = self.expr.eval(interpreter, Rc::clone(&env))?;
+
+        env.borrow_mut().set_variable(id, value)?;
 
         Ok(())
     }

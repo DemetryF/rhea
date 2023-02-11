@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use frontend::{ast::Call, error::*};
 
-use crate::{Env, Eval, Interpreter, SharedEnv};
+use crate::{Env, Eval, Function, Interpreter, SharedEnv};
 
 impl Eval for Call {
     fn eval(self, interpreter: &Interpreter, env: SharedEnv) -> Result<f64> {
@@ -34,24 +34,7 @@ impl Eval for Call {
         }
 
         if let Some(f) = interpreter.builtin_functions.get(&self.id.value) {
-            {
-                let received = self.args.len();
-                let expected = f.args_count;
-
-                if received != expected {
-                    return Err(Error::new(
-                        ErrorKind::InvalidArgsCount { expected, received },
-                        self.id.pos,
-                    ));
-                }
-            }
-
-            return Ok((f.call)(
-                self.args
-                    .into_iter()
-                    .map(|x| x.eval(interpreter, Rc::clone(&env)))
-                    .collect::<std::result::Result<Vec<f64>, Error>>()?,
-            ));
+            return call_builtin(self, f, interpreter, env);
         }
 
         Err(Error::new(
@@ -59,4 +42,29 @@ impl Eval for Call {
             self.id.pos,
         ))
     }
+}
+
+fn call_builtin(
+    call: Call,
+    f: &Function,
+    interpreter: &Interpreter,
+    env: SharedEnv,
+) -> Result<f64> {
+    let received = call.args.len();
+    let expected = f.args_count;
+
+    if received != expected {
+        let kind = ErrorKind::InvalidArgsCount { expected, received };
+        let pos = call.id.pos;
+
+        return Err(Error::new(kind, pos));
+    }
+
+    let args = call
+        .args
+        .into_iter()
+        .map(|x| x.eval(interpreter, Rc::clone(&env)))
+        .collect::<std::result::Result<Vec<f64>, Error>>()?;
+
+    Ok((f.call)(args))
 }

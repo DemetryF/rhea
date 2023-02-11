@@ -4,7 +4,10 @@ use crate::{EvalStatement, Interpreter, SharedEnv};
 
 impl EvalStatement for FunctionStatement {
     fn eval(self, interpreter: &mut Interpreter, _env: SharedEnv) -> Result<()> {
-        interpreter.functions.insert(self.id.value.clone(), self);
+        let id = self.id.value.clone();
+
+        interpreter.functions.insert(id, self);
+
         Ok(())
     }
 }

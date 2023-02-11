@@ -6,10 +6,13 @@ impl Eval for Prefix {
     fn eval(self, interpreter: &Interpreter, env: SharedEnv) -> Result<f64> {
         let rhs = self.rhs.eval(interpreter, env)?;
 
-        Ok(match self.op {
+        let value = match self.op {
             Operator::Addition => rhs,
             Operator::Subtraction => -rhs,
+
             _ => unreachable!(),
-        })
+        };
+
+        Ok(value)
     }
 }
