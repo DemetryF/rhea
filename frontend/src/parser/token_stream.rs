@@ -18,7 +18,7 @@ impl<'code> TokenStream<'code> {
         let mut lexer = Lexer::new(code);
 
         Ok(Self {
-            current: lexer.next()?,
+            current: lexer.next_token()?,
             errors: Vec::new(),
             following: None,
             in_function: false,
@@ -35,7 +35,7 @@ impl<'code> TokenStream<'code> {
             return Ok(self.following.as_ref().unwrap());
         }
 
-        let next_token = self.lexer.next()?;
+        let next_token = self.lexer.next_token()?;
         self.following = Some(next_token);
         self.following()
     }
@@ -45,7 +45,7 @@ impl<'code> TokenStream<'code> {
 
         match self.following.take() {
             Some(token) => self.current = token,
-            None => self.current = self.lexer.next()?,
+            None => self.current = self.lexer.next_token()?,
         }
 
         Ok(token)

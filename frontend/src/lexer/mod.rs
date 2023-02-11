@@ -24,7 +24,7 @@ impl<'code> Lexer<'code> {
         }
     }
 
-    pub fn next(&mut self) -> Result<Token> {
+    pub fn next_token(&mut self) -> Result<Token> {
         CommentsHandler::skip(&mut self.code_stream);
 
         let pos = self.code_stream.get_pos();

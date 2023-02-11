@@ -18,14 +18,6 @@ pub struct Interpreter {
 }
 
 impl Interpreter {
-    pub fn new() -> Self {
-        Self {
-            builtin_functions: HashMap::new(),
-            root_env: Env::new_shared(),
-            functions: HashMap::new(),
-        }
-    }
-
     pub fn eval(&mut self, stmts: Statement) -> Result<()> {
         stmts.eval(self, Rc::clone(&self.root_env))
     }
@@ -41,5 +33,15 @@ impl Interpreter {
                 call: Box::new(f),
             },
         );
+    }
+}
+
+impl Default for Interpreter {
+    fn default() -> Self {
+        Self {
+            builtin_functions: HashMap::new(),
+            root_env: Env::new_shared(),
+            functions: HashMap::new(),
+        }
     }
 }

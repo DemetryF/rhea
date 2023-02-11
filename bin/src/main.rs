@@ -8,7 +8,7 @@ fn main() {
 
     if let Ok(code) = fs::read_to_string(filename.clone()) {
         let mut parser = Parser::new(&code).unwrap();
-        let mut interpreter = Interpreter::new();
+        let mut interpreter = Interpreter::default();
 
         interpreter.add_function("print", 1, |x| {
             println!("{}", x.first().unwrap());
