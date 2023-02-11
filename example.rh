@@ -1,0 +1,10 @@
+// function declaration with name "square" and "cube"
+fn square(x) = x * x;
+fn cube(x) = x * x * x;
+
+// create variable with name "a" and value number from console
+let a = input();
+
+// output square and cube of a
+print(square(a));
+print(cube(a));

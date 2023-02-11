@@ -24,6 +24,7 @@ name = "bin"
 version = "0.1.0"
 dependencies = [
  "frontend",
+ "tree-walk",
 ]
 
 [[package]]
@@ -179,6 +180,13 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "tree-walk"
+version = "0.1.0"
+dependencies = [
+ "frontend",
 ]
 
 [[package]]

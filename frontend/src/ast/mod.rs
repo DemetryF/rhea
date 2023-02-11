@@ -7,7 +7,7 @@ pub use statement::*;
 pub mod expr;
 pub mod statement;
 
-#[derive(Constructor, Debug)]
+#[derive(Clone, Constructor, Debug)]
 pub struct Id {
     pub value: String,
     pub pos: Pos,

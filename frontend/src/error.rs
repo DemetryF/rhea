@@ -15,13 +15,21 @@ pub struct Error {
 pub enum ErrorKind {
     UnexpectedChar(char),
     UnexpectedToken(TokenValue),
+    InvalidVariable(String),
+    InvalidFunction(String),
+    InvalidArgsCount { expected: usize, received: usize },
 }
 
 impl Display for ErrorKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::UnexpectedChar(char) => write!(f, "unexpected char '{}'", char),
-            Self::UnexpectedToken(value) => write!(f, "unexpected token '{}'", value),
+            Self::UnexpectedChar(char) => write!(f, "unexpected char '{char}'"),
+            Self::UnexpectedToken(value) => write!(f, "unexpected token '{value}'"),
+            Self::InvalidVariable(var) => write!(f, "invalid variable '{var}'"),
+            Self::InvalidFunction(func) => write!(f, "invalid function '{func}'"),
+            Self::InvalidArgsCount { expected, received } => {
+                write!(f, "expected {expected} args, recieved {received}")
+            }
         }
     }
 }

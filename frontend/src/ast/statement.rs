@@ -16,7 +16,7 @@ pub struct AssignmentStatement {
     pub expr: Expr,
 }
 
-#[derive(Debug, Constructor)]
+#[derive(Debug, Constructor, Clone)]
 pub struct FunctionStatement {
     pub id: Id,
     pub args: Vec<Id>,

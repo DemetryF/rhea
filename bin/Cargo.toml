@@ -4,4 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-frontend = { path = "../frontend" }
+tree-walk = { path = "../tree-walk" }
+frontend  = { path = "../frontend"  }
