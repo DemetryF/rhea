@@ -11,7 +11,7 @@ fn main() {
         let mut interpreter = Interpreter::new();
 
         interpreter.add_function("print", 1, |x| {
-            println!("{}", x.get(0).unwrap());
+            println!("{}", x.first().unwrap());
             0.0
         });
 
