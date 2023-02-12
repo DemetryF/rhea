@@ -1,13 +1,11 @@
 use std::{env, fs};
 
-use frontend::parser::Parser;
 use tree_walk::Interpreter;
 
 fn main() {
     let filename = env::args().last().expect("no input file");
 
     if let Ok(code) = fs::read_to_string(filename.clone()) {
-        let mut parser = Parser::new(&code).unwrap();
         let mut interpreter = Interpreter::default();
 
         interpreter.add_function("print", 1, |x| {
@@ -21,20 +19,14 @@ fn main() {
             num.trim().parse().unwrap()
         });
 
-        let stmts = parser.parse().unwrap();
-
-        if !parser.token_stream.errors.is_empty() {
-            for error in parser.token_stream.errors {
-                println!("{error}")
-            }
-        } else {
-            for stmt in stmts {
-                match interpreter.eval(stmt) {
-                    Ok(()) => (),
-                    Err(error) => println!("{error}"),
+        match interpreter.eval(&code) {
+            Ok(()) => (),
+            Err(errors) => {
+                for error in errors {
+                    println!("{error}");
                 }
             }
-        }
+        };
     } else {
         println!("cannot find file '{filename}'")
     }

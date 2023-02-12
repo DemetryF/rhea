@@ -1,5 +1,5 @@
 // function declaration with name "square"
-fn square(x) = x * x *;
+fn square(x) = x * x;
 
 // create variable with name "a" and value number from console
 let a = input();

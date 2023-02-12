@@ -1,5 +1,5 @@
 use crate::{env::*, eval::Eval, eval_statement::EvalStatement};
-use frontend::{ast::*, error::*};
+use frontend::{ast::*, error::Error, parser::Parser};
 use std::{collections::HashMap, rc::Rc};
 
 mod env;
@@ -18,8 +18,31 @@ pub struct Interpreter {
 }
 
 impl Interpreter {
-    pub fn eval(&mut self, stmts: Statement) -> Result<()> {
-        stmts.eval(self, Rc::clone(&self.root_env))
+    pub fn eval(&mut self, code: &str) -> Result<(), Vec<Error>> {
+        let mut parser = match Parser::new(code) {
+            Ok(parser) => parser,
+            Err(error) => return Err(vec![error]),
+        };
+
+        let stmts = match parser.parse() {
+            Ok(stmts) => stmts,
+            Err(errors) => return Err(errors),
+        };
+
+        let mut errors = Vec::new();
+
+        for stmt in stmts {
+            match stmt.eval(self, Rc::clone(&self.root_env)) {
+                Ok(()) => (),
+                Err(error) => errors.push(error),
+            }
+        }
+
+        if !errors.is_empty() {
+            Err(errors)
+        } else {
+            Ok(())
+        }
     }
 
     pub fn add_function<F>(&mut self, name: &str, args_count: usize, f: F)
