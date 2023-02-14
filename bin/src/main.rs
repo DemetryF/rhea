@@ -5,29 +5,29 @@ use tree_walk::Interpreter;
 fn main() {
     let filename = env::args().last().expect("no input file");
 
-    if let Ok(code) = fs::read_to_string(filename.clone()) {
-        let mut interpreter = Interpreter::default();
+    let Ok(code) = fs::read_to_string(filename.clone()) else {
+        panic!("cannot find file '{filename}'");
+    };
 
-        interpreter.add_function("print", 1, |x| {
-            println!("{}", x.first().unwrap());
-            0.0
-        });
+    let mut interpreter = Interpreter::default();
 
-        interpreter.add_function("input", 0, |_| {
-            let mut num = String::new();
-            std::io::stdin().read_line(&mut num).unwrap();
-            num.trim().parse().unwrap()
-        });
+    interpreter.add_function("print", 1, |x| {
+        println!("{}", x.first().unwrap());
+        0.0
+    });
 
-        match interpreter.eval(&code) {
-            Ok(()) => (),
-            Err(errors) => {
-                for error in errors {
-                    println!("{error}");
-                }
+    interpreter.add_function("input", 0, |_| {
+        let mut num = String::new();
+        std::io::stdin().read_line(&mut num).unwrap();
+        num.trim().parse().unwrap()
+    });
+
+    match interpreter.eval(&code) {
+        Ok(()) => (),
+        Err(errors) => {
+            for error in errors {
+                println!("{error}");
             }
-        };
-    } else {
-        println!("cannot find file '{filename}'")
-    }
+        }
+    };
 }

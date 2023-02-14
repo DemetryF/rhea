@@ -19,15 +19,8 @@ pub struct Interpreter {
 
 impl Interpreter {
     pub fn eval(&mut self, code: &str) -> Result<(), Vec<Error>> {
-        let mut parser = match Parser::new(code) {
-            Ok(parser) => parser,
-            Err(error) => return Err(vec![error]),
-        };
-
-        let stmts = match parser.parse() {
-            Ok(stmts) => stmts,
-            Err(errors) => return Err(errors),
-        };
+        let mut parser = Parser::new(code).map_err(|x| vec![x])?;
+        let stmts = parser.parse()?;
 
         let mut errors = Vec::new();
 
